@@ -13,3 +13,9 @@ The default key bindings of *VTE* are extended with the following:
     -   Paste selection.
 +   *[ctrl]-[shift]-l*
     -   Reset scrollback.
+
+Packages
+--------
+Arch Linux users can install lwt using the following [AUR package][].
+
+[AUR package]: https://aur.archlinux.org/packages.php?ID=57945
