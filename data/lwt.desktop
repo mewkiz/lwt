@@ -3,4 +3,4 @@ Name=lwt
 Exec=lwt
 Icon=utilities-terminal
 Type=Application
-Categories=GTK;Utility;TerminalEmulator;
+Categories=GTK;System;Utility;TerminalEmulator;
