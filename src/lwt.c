@@ -6,101 +6,59 @@
 
 int main(int argc, char **argv)
 {
-   gtk_init(&argc, &argv);
-   lwt_spawn();
-   gtk_main();
-   return 0;
-}
+	gtk_init(&argc, &argv);
 
-void lwt_spawn(void)
-{
-   GtkWindow *win;
-   VteTerminal *vte;
-   char *argv[2] = {LWT_SHELL, NULL};
+	// Create window with a terminal emulator.
+	GtkWindow *win = GTK_WINDOW(gtk_window_new(GTK_WINDOW_TOPLEVEL));
+	VteTerminal *vte = VTE_TERMINAL(vte_terminal_new());
+	gtk_container_add(GTK_CONTAINER(win), GTK_WIDGET(vte));
+	vte_terminal_set_font_from_string(vte, FONT);
+	vte_terminal_set_scrollback_lines(vte, LINES);
 
-   win = GTK_WINDOW(gtk_window_new(GTK_WINDOW_TOPLEVEL));
-   vte = VTE_TERMINAL(vte_terminal_new());
-   gtk_container_add(GTK_CONTAINER(win), GTK_WIDGET(vte));
-   g_object_connect
-   (
-      win,
-      "signal::delete_event", gtk_main_quit, NULL,
-      "signal::key-press-event", on_win_key_press, vte,
-      NULL
-   );
-   g_signal_connect(vte, "child-exited", gtk_main_quit, NULL);
-   vte_terminal_set_audible_bell(vte, FALSE);
-   vte_terminal_set_font_from_string(vte, LWT_FONT);
-   vte_terminal_set_scrollback_lines(vte, LWT_LINES);
-   lwt_set_geometry_hints(win, vte);
-   vte_terminal_fork_command_full
-   (
-      vte,  // terminal
-      0,    // pty_flags
-      NULL, // working_directory
-      argv, // argv
-      NULL, // envv
-      0,    // spawn_flags
-      NULL, // child_setup
-      NULL, // child_setup_data
-      NULL, // child_pid
-      NULL  // error
-   );
-   gtk_widget_show_all(GTK_WIDGET(win));
+	// Connect signals.
+	g_signal_connect(win, "delete_event", gtk_main_quit, NULL);
+	g_signal_connect(win, "key-press-event", G_CALLBACK(on_win_key_press), vte);
+	g_signal_connect(vte, "child-exited", gtk_main_quit, NULL);
+
+	// Fork shell process.
+	char *shell_argv[2] = {SHELL, NULL};
+	vte_terminal_fork_command_full(vte, 0, NULL, shell_argv, NULL, 0, NULL, NULL, NULL, NULL);
+
+	gtk_widget_show_all(GTK_WIDGET(win));
+
+	gtk_main();
+	return 0;
 }
 
 gboolean on_win_key_press(GtkWidget *win, GdkEventKey *event, VteTerminal *vte)
 {
-   int mod = event->state & gtk_accelerator_get_default_mod_mask();
+	int mod = event->state & gtk_accelerator_get_default_mod_mask();
 
-   // [ctrl] + [shift]
-   if(mod == (GDK_CONTROL_MASK | GDK_SHIFT_MASK))
-   {
-      switch(event->keyval)
-      {
-      // [ctrl] + [shift] + [c]
-      case GDK_C:
-      case GDK_c:
-         vte_terminal_copy_clipboard(vte);
-         return TRUE;
+	// [ctrl] + [shift]
+	if(mod == (GDK_CONTROL_MASK|GDK_SHIFT_MASK))
+	{
+		switch(event->keyval)
+		{
+		// [ctrl] + [shift] + [c]
+		case GDK_KEY_C:
+		case GDK_KEY_c:
+			vte_terminal_copy_clipboard(vte);
+			return TRUE;
 
-      // [ctrl] + [shift] + [v]
-      case GDK_V:
-      case GDK_v:
-         vte_terminal_paste_clipboard(vte);
-         return TRUE;
+		// [ctrl] + [shift] + [v]
+		case GDK_KEY_V:
+		case GDK_KEY_v:
+			vte_terminal_paste_clipboard(vte);
+			return TRUE;
 
-      // [ctrl] + [shift] + [l]
-      case GDK_L:
-      case GDK_l:
-         vte_terminal_reset(vte, TRUE, TRUE);
-         write(vte_terminal_get_pty(vte), "\x0C", 1);
-         return TRUE;
-      }
-   }
-   return FALSE;
-}
+		// [ctrl] + [shift] + [l]
+		case GDK_KEY_L:
+		case GDK_KEY_l:
+			vte_terminal_reset(vte, TRUE, TRUE);
+			write(vte_terminal_get_pty(vte), "\x0C", 1);
+			return TRUE;
+		}
+	}
 
-void lwt_set_geometry_hints(GtkWindow *win, VteTerminal *vte)
-{
-   GdkGeometry hints;
-   GtkBorder *border;
-   gint char_width, char_height;
-
-   gtk_widget_style_get(GTK_WIDGET(vte), "inner-border", &border, NULL);
-   char_width = vte_terminal_get_char_width(vte);
-   char_height = vte_terminal_get_char_height(vte);
-   hints.base_width = border->left + border->right;
-   hints.base_height = border->top + border->bottom;
-   hints.min_width = char_width + border->left + border->right;
-   hints.min_height = char_height + border->top + border->bottom;
-   hints.width_inc = char_width;
-   hints.height_inc = char_height;
-   gtk_window_set_geometry_hints
-   (
-      win,
-      GTK_WIDGET(vte),
-      &hints,
-      GDK_HINT_MIN_SIZE | GDK_HINT_RESIZE_INC
-   );
+	return FALSE;
 }

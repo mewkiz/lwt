@@ -1,29 +1,28 @@
-BIN_NAME=lwt
+NAME=lwt
 DESTDIR=/usr
 
-CC=clang
 CFLAGS=-Wall `pkg-config --cflags gtk+-2.0 vte` -I./src
-LIBS=-lgtk-x11-2.0 -lgobject-2.0 -lvte
+LIBS=`pkg-config --libs gtk+-2.0 vte`
 
-all: $(BIN_NAME)
+all: $(NAME)
 
-$(BIN_NAME):
+$(NAME):
 	$(CC) $(CFLAGS) -o $@ src/*.c $(LIBS)
 	@gzip -c data/lwt.1 > lwt.1.gz
 
-install:
-	@mkdir -p "$(DESTDIR)/bin/"
-	install -m755 $(BIN_NAME) "$(DESTDIR)/bin/"
-	@mkdir -p "$(DESTDIR)/share/applications/"
-	install -m644 data/$(BIN_NAME).desktop "$(DESTDIR)/share/applications/"
-	@mkdir -p "$(DESTDIR)/share/man/man1/"
-	install -m644 $(BIN_NAME).1.gz "$(DESTDIR)/share/man/man1/"
+install: $(NAME)
+	@mkdir -p "$(DESTDIR)/bin"
+	install -m755 $(NAME) "$(DESTDIR)/bin"
+	@mkdir -p "$(DESTDIR)/share/applications"
+	install -m644 data/$(NAME).desktop "$(DESTDIR)/share/applications"
+	@mkdir -p "$(DESTDIR)/share/man/man1"
+	install -m644 $(NAME).1.gz "$(DESTDIR)/share/man/man1"
 
 uninstall:
-	rm -f "$(DESTDIR)/bin/$(BIN_NAME)"
-	rm -f "$(DESTDIR)/share/applications/$(BIN_NAME).desktop"
-	rm -f "$(DESTDIR)/share/man/man1/$(BIN_NAME).1.gz"
+	rm -f "$(DESTDIR)/bin/$(NAME)"
+	rm -f "$(DESTDIR)/share/applications/$(NAME).desktop"
+	rm -f "$(DESTDIR)/share/man/man1/$(NAME).1.gz"
 
 clean:
-	rm -f $(BIN_NAME)
-	rm -f $(BIN_NAME).1.gz
+	rm -f $(NAME)
+	rm -f $(NAME).1.gz
