@@ -1,8 +1,8 @@
 NAME=lwt
 DESTDIR=/usr
 
-CFLAGS=-Wall `pkg-config --cflags gtk+-2.0 vte` -I./src
-LIBS=`pkg-config --libs gtk+-2.0 vte`
+CFLAGS=-Wall `pkg-config --cflags gtk+-3.0 vte-2.90` -I./src
+LIBS=`pkg-config --libs gtk+-3.0 vte-2.90`
 
 all: $(NAME)
 
