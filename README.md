@@ -24,7 +24,7 @@ Packages
 
 Arch Linux users can install lwt using the following [AUR package][].
 
-[AUR package]: https://aur.archlinux.org/packages.php?ID=57945
+[AUR package]: https://aur.archlinux.org/packages/lwt/
 
 public domain
 -------------
