@@ -1,7 +1,7 @@
 #ifndef __LWT_H__
 #define __LWT_H__
 
-#define FONT  "Fixed 9"
+#define FONT  "Fixed 12"
 #define LINES 65535
 #define SHELL "/bin/bash"
 
