@@ -1,34 +1,29 @@
-lwt
-===
+# lwt
 
-lwt is a lightweight terminal emulator based on the [VTE][] and [GTK][]
-libraries.
+`lwt` is a lightweight terminal emulator based on the [VTE] and [GTK] libraries.
 
-[VTE]: https://wiki.gnome.org/action/show/Apps/Terminal/VTE
+[VTE]: https://developer.gnome.org/vte/
 [GTK]: http://www.gtk.org/
 
-Key bindings
-------------
+# Key bindings
 
 The default key bindings of VTE are extended with the following:
 
 - [ctrl]-[shift]-c
-	- Copy selection.
+	- Copy selection
 - [ctrl]-[shift]-v
-	- Paste selection.
+	- Paste selection
 - [ctrl]-[shift]-l
-	- Reset scrollback.
+	- Reset scrollback
 
-Packages
---------
+# Packages
 
-Arch Linux users can install lwt using the following [AUR package][].
+Arch Linux users can install `lwt` using the following [AUR package].
 
 [AUR package]: https://aur.archlinux.org/packages/lwt/
 
-public domain
--------------
+## Public domain
 
-This code is hereby released into the *[public domain][]*.
+The source code and any original content of this repository is hereby released into the [public domain].
 
 [public domain]: https://creativecommons.org/publicdomain/zero/1.0/
