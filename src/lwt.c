@@ -66,18 +66,14 @@ gboolean on_win_key_press(GtkWidget *win, GdkEventKey *event, VteTerminal *vte) 
 		// [ctrl] + '+'
 		case GDK_KEY_plus:
 			font_scale = vte_terminal_get_font_scale(vte);
-			printf("before scale=%f\n", font_scale);
 			font_scale *= 1.1;
-			printf("after scale=%f\n", font_scale);
 			vte_terminal_set_font_scale(vte, font_scale);
 			return TRUE;
 
 		// [ctrl] + '-'
 		case GDK_KEY_minus:
 			font_scale = vte_terminal_get_font_scale(vte);
-			printf("before scale=%f\n", font_scale);
 			font_scale /= 1.1;
-			printf("after scale=%f\n", font_scale);
 			vte_terminal_set_font_scale(vte, font_scale);
 			return TRUE;
 		}
