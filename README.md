@@ -9,12 +9,16 @@
 
 The default key bindings of VTE are extended with the following:
 
-- [ctrl]-[shift]-c
+- `[ctrl] + [shift] + 'c'`
 	- Copy selection
-- [ctrl]-[shift]-v
+- `[ctrl] + [shift] + 'v'`
 	- Paste selection
-- [ctrl]-[shift]-l
+- `[ctrl] + [shift] + 'l'`
 	- Reset scrollback
+- `[ctrl] + '+'`
+    - Increase font size
+- `[ctrl] + '-'`
+    - Decrease font size
 
 # Packages
 

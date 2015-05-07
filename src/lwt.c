@@ -23,6 +23,7 @@ int main(int argc, char **argv) {
 	char *shell_argv[2] = {LWT_SHELL, NULL};
 	vte_terminal_spawn_sync(vte, 0, NULL, shell_argv, NULL, 0, NULL, NULL, NULL, NULL, NULL);
 
+	// Show window.
 	gtk_widget_show_all(GTK_WIDGET(win));
 	gtk_main();
 
@@ -36,24 +37,48 @@ gboolean on_win_key_press(GtkWidget *win, GdkEventKey *event, VteTerminal *vte) 
 	// [ctrl] + [shift]
 	if (mod == (GDK_CONTROL_MASK|GDK_SHIFT_MASK)) {
 		switch (event->keyval) {
-		// [ctrl] + [shift] + [c]
+		// [ctrl] + [shift] + 'c'
 		case GDK_KEY_C:
 		case GDK_KEY_c:
 			vte_terminal_copy_clipboard(vte);
 			return TRUE;
 
-		// [ctrl] + [shift] + [v]
+		// [ctrl] + [shift] + 'v'
 		case GDK_KEY_V:
 		case GDK_KEY_v:
 			vte_terminal_paste_clipboard(vte);
 			return TRUE;
 
-		// [ctrl] + [shift] + [l]
+		// [ctrl] + [shift] + 'l'
 		case GDK_KEY_L:
 		case GDK_KEY_l:
 			vte_terminal_reset(vte, TRUE, TRUE);
 			pty = vte_terminal_get_pty(vte);
 			write(vte_pty_get_fd(pty), "\x0C", 1);
+			return TRUE;
+		}
+	}
+
+	// [ctrl]
+	double font_scale;
+	if ((mod&GDK_CONTROL_MASK) != 0) {
+		switch (event->keyval) {
+		// [ctrl] + '+'
+		case GDK_KEY_plus:
+			font_scale = vte_terminal_get_font_scale(vte);
+			printf("before scale=%f\n", font_scale);
+			font_scale *= 1.1;
+			printf("after scale=%f\n", font_scale);
+			vte_terminal_set_font_scale(vte, font_scale);
+			return TRUE;
+
+		// [ctrl] + '-'
+		case GDK_KEY_minus:
+			font_scale = vte_terminal_get_font_scale(vte);
+			printf("before scale=%f\n", font_scale);
+			font_scale /= 1.1;
+			printf("after scale=%f\n", font_scale);
+			vte_terminal_set_font_scale(vte, font_scale);
 			return TRUE;
 		}
 	}
