@@ -24,7 +24,7 @@ The default key bindings of VTE are extended with the following:
 
 Arch Linux users can install `lwt` using the following [AUR package].
 
-[AUR package]: https://aur.archlinux.org/packages/lwt/
+[AUR package]: https://aur.archlinux.org/packages/lwt-git/
 
 ## Public domain
 
