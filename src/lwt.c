@@ -6,13 +6,9 @@
 // Config path.
 #define LWT_CONF ".config/lwt/lwt.conf"
 
-// Fallback font if not located in config.
+// Fallback options if not present in config file.
 #define LWT_FONT "Fixed 9"
-
-// Fallback shell if not located in config.
 #define LWT_SHELL "/bin/bash"
-
-// Fallback opacity if not located in config.
 #define LWT_OPACITY 1.0
 
 gboolean on_key_press(GtkWidget *win, GdkEventKey *event, VteTerminal *vte);
