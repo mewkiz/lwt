@@ -5,14 +5,14 @@
 [VTE]: https://developer.gnome.org/vte/
 [GTK]: http://www.gtk.org/
 
-# Key bindings
+## Key bindings
 
 The default key bindings of VTE are extended with the following:
 
 - `[ctrl] + [shift] + 'c'`
 	- Copy selection
 - `[ctrl] + [shift] + 'v'`
-	- Paste selection
+	- Paste
 - `[ctrl] + [shift] + 'l'`
 	- Reset scrollback
 - `[ctrl] + '+'`
@@ -20,11 +20,20 @@ The default key bindings of VTE are extended with the following:
 - `[ctrl] + '-'`
     - Decrease font size
 
-# Packages
+## Configuration
 
-Arch Linux users can install `lwt` using the following [AUR package].
+Store a modified copy of the example configuration file [lwt.conf](lwt.conf) in `~/.config/lwt/lwt.conf`.
 
-[AUR package]: https://aur.archlinux.org/packages/lwt-git/
+Example config:
+```
+[lwt]
+font = "Fixed 11"
+shell = "/usr/bin/fish"
+```
+
+## Packages
+
+Arch Linux users can install `lwt` using the following [AUR package](https://aur.archlinux.org/packages/lwt-git/).
 
 ## Public domain
 

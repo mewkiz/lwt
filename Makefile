@@ -1,28 +1,29 @@
-NAME=lwt
 DESTDIR=/usr
 
 CFLAGS=-Wall `pkg-config --cflags gtk+-3.0 vte-2.91` -I./src
-LIBS=`pkg-config --libs gtk+-3.0 vte-2.91`
+LIBS=`pkg-config --libs gtk+-3.0 vte-2.91` -liniparser
 
-all: $(NAME)
+all: lwt
 
-$(NAME):
-	$(CC) $(CFLAGS) -o $@ src/*.c $(LIBS)
+lwt: src/lwt.c
+	${CC} ${CFLAGS} -o $@ $< ${LIBS}
 	@gzip -c data/lwt.1 > lwt.1.gz
 
-install: $(NAME)
-	@mkdir -p "$(DESTDIR)/bin"
-	install -m755 $(NAME) "$(DESTDIR)/bin"
-	@mkdir -p "$(DESTDIR)/share/applications"
-	install -m644 data/$(NAME).desktop "$(DESTDIR)/share/applications"
-	@mkdir -p "$(DESTDIR)/share/man/man1"
-	install -m644 $(NAME).1.gz "$(DESTDIR)/share/man/man1"
+.PHONY: install uninstall clean
+
+install: lwt
+	@mkdir -p "${DESTDIR}/bin"
+	install -m755 lwt "${DESTDIR}/bin"
+	@mkdir -p "${DESTDIR}/share/applications"
+	install -m644 data/lwt.desktop "${DESTDIR}/share/applications"
+	@mkdir -p "${DESTDIR}/share/man/man1"
+	install -m644 lwt.1.gz "${DESTDIR}/share/man/man1"
 
 uninstall:
-	rm -f "$(DESTDIR)/bin/$(NAME)"
-	rm -f "$(DESTDIR)/share/applications/$(NAME).desktop"
-	rm -f "$(DESTDIR)/share/man/man1/$(NAME).1.gz"
+	rm -f "${DESTDIR}/bin/lwt"
+	rm -f "${DESTDIR}/share/applications/lwt.desktop"
+	rm -f "${DESTDIR}/share/man/man1/lwt.1.gz"
 
 clean:
-	rm -f $(NAME)
-	rm -f $(NAME).1.gz
+	rm -f lwt
+	rm -f lwt.1.gz
