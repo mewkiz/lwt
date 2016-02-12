@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
 	VteTerminal *vte = VTE_TERMINAL(vte_terminal_new());
 	gtk_container_add(GTK_CONTAINER(win), GTK_WIDGET(vte));
 	vte_terminal_set_font(vte, pango_font_description_from_string(font));
-	vte_terminal_set_scrollback_lines(vte, 65535);
+	vte_terminal_set_scrollback_lines(vte, 1000000);
 
 	// Connect signals.
 	g_signal_connect(win, "delete_event", gtk_main_quit, NULL);
