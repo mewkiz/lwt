@@ -16,12 +16,15 @@ install: lwt
 	install -m755 lwt "${DESTDIR}/bin"
 	@mkdir -p "${DESTDIR}/share/applications"
 	install -m644 data/lwt.desktop "${DESTDIR}/share/applications"
+	@mkdir -p "${DESTDIR}/share/lwt"
+	install -m644 lwt.conf "${DESTDIR}/share/lwt"
 	@mkdir -p "${DESTDIR}/share/man/man1"
 	install -m644 lwt.1.gz "${DESTDIR}/share/man/man1"
 
 uninstall:
 	rm -f "${DESTDIR}/bin/lwt"
 	rm -f "${DESTDIR}/share/applications/lwt.desktop"
+	rm -f "${DESTDIR}/share/lwt/lwt.conf"
 	rm -f "${DESTDIR}/share/man/man1/lwt.1.gz"
 
 clean:
