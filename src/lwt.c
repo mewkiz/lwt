@@ -58,7 +58,6 @@ int main(int argc, char **argv) {
 
 	// Show window.
 	gtk_widget_show_all(GTK_WIDGET(win));
-	clear_shell(vte);
 	gtk_main();
 
 	return 0;
