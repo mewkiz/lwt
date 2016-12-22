@@ -42,7 +42,8 @@ int main(int argc, char **argv) {
 
 	// Enable transparency.
 	if (opacity < 1) {
-		if (!gtk_widget_is_composited(GTK_WIDGET(win))) {
+		GdkScreen *screen = gdk_screen_get_default();
+		if (!gdk_screen_is_composited(screen)) {
 			fprintf(stderr, "unable to enable transparency; no compositing manager running (e.g. xcompmgr)\n.");
 		} else {
 			g_signal_connect(win, "screen-changed", G_CALLBACK(on_screen_change), NULL);
