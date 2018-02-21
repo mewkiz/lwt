@@ -54,8 +54,8 @@ int main(int argc, char **argv) {
 	}
 
 	// Fork shell process.
-	char *shell_argv[2] = {shell, NULL};
-	vte_terminal_spawn_sync(vte, 0, NULL, shell_argv, NULL, 0, NULL, NULL, NULL, NULL, NULL);
+	argv[0] = shell;
+	vte_terminal_spawn_sync(vte, 0, NULL, argv, NULL, 0, NULL, NULL, NULL, NULL, NULL);
 
 	// Show window.
 	gtk_widget_show_all(GTK_WIDGET(win));
