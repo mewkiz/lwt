@@ -54,6 +54,9 @@ Arch Linux users can install `lwt` using the following [AUR package](https://aur
 
 ## Changes
 
+* Version 0.2 (2018-02-21)
+    - Support passing arguments to the spawned shell.
+
 * Version 0.1 (2016-02-10)
     - Initial release.
     - Minimal terminal emulator (less than 200 lines of code).
