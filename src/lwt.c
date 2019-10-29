@@ -10,7 +10,7 @@
 #define LWT_FONT "Fixed 9"
 #define LWT_SHELL "/bin/bash"
 #define LWT_OPACITY 1.0
-#define LWT_SCROLLBACK_LINES 10000000
+#define LWT_SCROLLBACK_LINES 100000000
 
 gboolean on_key_press(GtkWidget *win, GdkEventKey *event, VteTerminal *vte);
 void on_screen_change(GtkWidget *win, GdkScreen *prev, gpointer data);
