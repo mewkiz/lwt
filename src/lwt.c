@@ -10,7 +10,6 @@
 #define LWT_FONT "Fixed 9"
 #define LWT_SHELL "/bin/bash"
 #define LWT_OPACITY 1.0
-#define LWT_SCROLLBACK_LINES 100000000
 
 gboolean on_key_press(GtkWidget *win, GdkEventKey *event, VteTerminal *vte);
 void on_screen_change(GtkWidget *win, GdkScreen *prev, gpointer data);
@@ -27,7 +26,6 @@ int main(int argc, char **argv) {
 	char *font = strdup(iniparser_getstring(dict, "lwt:font", LWT_FONT));
 	char *shell = strdup(iniparser_getstring(dict, "lwt:shell", LWT_SHELL));
 	double opacity = iniparser_getdouble(dict, "lwt:opacity", LWT_OPACITY);
-	int scrollback_lines = iniparser_getint(dict, "lwt:scrollback_lines", LWT_SCROLLBACK_LINES);
 	iniparser_freedict(dict);
 
 	// Create window with a terminal emulator.
@@ -35,7 +33,7 @@ int main(int argc, char **argv) {
 	VteTerminal *vte = VTE_TERMINAL(vte_terminal_new());
 	gtk_container_add(GTK_CONTAINER(win), GTK_WIDGET(vte));
 	vte_terminal_set_font(vte, pango_font_description_from_string(font));
-	vte_terminal_set_scrollback_lines(vte, scrollback_lines);
+	vte_terminal_set_scrollback_lines(vte, -1);
 
 	// Connect signals.
 	g_signal_connect(win, "delete_event", gtk_main_quit, NULL);
